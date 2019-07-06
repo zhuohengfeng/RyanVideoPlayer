@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 
+def native_sdk_path = file(rootDir.getAbsolutePath() + "/app")
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -9,9 +11,19 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters 'armeabi-v7a'
+        }
         externalNativeBuild {
             cmake {
-                cppFlags "-std=c++11"
+                arguments '-DANDROID_PLATFORM=android-28', '-DANDROID_TOOLCHAIN=clang',
+                        '-DANDROID_ARM_NEON=TRUE', '-DANDROID_STL=c++_static',
+                        "-DPATH_TO_MEDIACORE:STRING=${native_sdk_path}"
+                cFlags '-O3', '-DGL_GLEXT_PROTOTYPES', '-DEGL_EGLEXT_PROTOTYPES', '-fsigned-char', "-I${native_sdk_path}", '-Wformat','-mfpu=neon', '-mfloat-abi=softfp -frtti' // full optimization, char data type is signed
+                // 编译优化，设置函式是否能被 inline 的伪指令长度
+                cppFlags '-O3', '-fexceptions', '-fsigned-char',
+                        "-frtti -std=c++11", '-Wformat'
             }
         }
     }
@@ -27,6 +39,10 @@ android {
             version "3.10.2"
         }
     }
+}
+
+clean.doFirst {
+    delete "${projectDir}/.externalNativeBuild"
 }
 
 dependencies {
