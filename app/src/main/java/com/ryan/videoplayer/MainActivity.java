@@ -1,29 +1,41 @@
 package com.ryan.videoplayer;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+import com.ryan.videoplayer.base.BaseActivity;
+
+/**
+ * RTMP的视频直播的播放器界面
+ */
+public class MainActivity extends BaseActivity {
 
     // Used to load the 'native-lib' library on application startup.
     static {
         System.loadLibrary("native-lib");
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        // Example of a call to a native method
-        TextView tv = findViewById(R.id.sample_text);
-        tv.setText(stringFromJNI());
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_main;
     }
+
+    @Override
+    protected void initView() {
+        ((TextView)findViewById(R.id.sample_text)).setText(stringFromJNI());
+    }
+
+    @Override
+    protected void initData() {
+        // 请求权限
+    }
+
+
 
     /**
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.
      */
     public native String stringFromJNI();
+
 }
