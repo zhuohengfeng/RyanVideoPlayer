@@ -8,8 +8,8 @@ android {
         applicationId "com.ryan.videoplayer"
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 100
+        versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         ndk {
@@ -35,7 +35,7 @@ android {
     }
     externalNativeBuild {
         cmake {
-            path "src/main/cpp/CMakeLists.txt"
+            path "CMakeLists.txt"
             version "3.10.2"
         }
     }
