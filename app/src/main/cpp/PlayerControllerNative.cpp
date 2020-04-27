@@ -5,7 +5,7 @@
 
 #include <android/native_window.h>
 #include <android/native_window_jni.h>
-#include "video_player_controller.h"
+#include "video_player/video_player_controller.h"
 
 VideoPlayerController* videoPlayerController;
 
@@ -67,17 +67,21 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_ryan_videoplayer_player_PlayerController_onSurfaceCreated(JNIEnv *env, jobject thiz,
                                                                    jobject surface) {
-    // TODO: implement onSurfaceCreated()
     LOGI("onSurfaceCreated\n");
-
+    if (NULL != videoPlayerController) {
+        window = ANativeWindow_fromSurface(env, surface);
+        //videoPlayerController->onSurfaceCreated(window, width, height);
+    }
 }
 
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_ryan_videoplayer_player_PlayerController_onSurfaceDestroyed(JNIEnv *env, jobject thiz,
                                                                      jobject surface) {
-    // TODO: implement onSurfaceDestroyed()
     LOGI("onSurfaceDestroyed\n");
+    if (NULL != videoPlayerController) {
+        videoPlayerController->onSurfaceDestroyed();
+    }
 }
 
 
@@ -87,8 +91,10 @@ Java_com_ryan_videoplayer_player_PlayerController_onSurfaceDestroyed(JNIEnv *env
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_ryan_videoplayer_player_PlayerController_pause(JNIEnv *env, jobject thiz) {
-    // TODO: implement pause()
     LOGI("pause\n");
+    if(NULL != videoPlayerController) {
+        videoPlayerController->pause();
+    }
 }
 
 /**
@@ -97,8 +103,10 @@ Java_com_ryan_videoplayer_player_PlayerController_pause(JNIEnv *env, jobject thi
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_ryan_videoplayer_player_PlayerController_play(JNIEnv *env, jobject thiz) {
-    // TODO: implement play()
     LOGI("play\n");
+    if(NULL != videoPlayerController) {
+        videoPlayerController->play();
+    }
 }
 
 /**
@@ -107,7 +115,11 @@ Java_com_ryan_videoplayer_player_PlayerController_play(JNIEnv *env, jobject thiz
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_ryan_videoplayer_player_PlayerController_stop(JNIEnv *env, jobject thiz) {
-    // TODO: implement stop()
+    if(NULL != videoPlayerController) {
+        videoPlayerController->destroy();
+        delete videoPlayerController;
+        videoPlayerController = NULL;
+    }
 }
 
 /**
@@ -116,7 +128,10 @@ Java_com_ryan_videoplayer_player_PlayerController_stop(JNIEnv *env, jobject thiz
 extern "C"
 JNIEXPORT jfloat JNICALL
 Java_com_ryan_videoplayer_player_PlayerController_getBufferedProgress(JNIEnv *env, jobject thiz) {
-    // TODO: implement getBufferedProgress()
+    if (NULL != videoPlayerController) {
+        return videoPlayerController->getBufferedProgress();
+    }
+    return 0.0f;
 }
 
 /**
@@ -125,7 +140,10 @@ Java_com_ryan_videoplayer_player_PlayerController_getBufferedProgress(JNIEnv *en
 extern "C"
 JNIEXPORT jfloat JNICALL
 Java_com_ryan_videoplayer_player_PlayerController_getPlayProgress(JNIEnv *env, jobject thiz) {
-    // TODO: implement getPlayProgress()
+    if (NULL != videoPlayerController) {
+        return videoPlayerController->getPlayProgress();
+    }
+    return 0.0f;
 }
 
 /**
@@ -135,7 +153,9 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_ryan_videoplayer_player_PlayerController_seekToPosition(JNIEnv *env, jobject thiz,
                                                                  jfloat position) {
-    // TODO: implement seekToPosition()
+    if(NULL != videoPlayerController) {
+        videoPlayerController->seekToPosition(position);
+    }
 }
 
 /**
@@ -145,19 +165,25 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_ryan_videoplayer_player_PlayerController_seekCurrent(JNIEnv *env, jobject thiz,
                                                               jfloat position) {
-    // TODO: implement seekCurrent()
+    if(NULL != videoPlayerController) {
+//		videoPlayerController->seekCurrent(position);
+    }
 }
 
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_ryan_videoplayer_player_PlayerController_beforeSeekCurrent(JNIEnv *env, jobject thiz) {
-    // TODO: implement beforeSeekCurrent()
+    if(NULL != videoPlayerController) {
+//		videoPlayerController->beforeSeekCurrent();
+    }
 }
 
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_ryan_videoplayer_player_PlayerController_afterSeekCurrent(JNIEnv *env, jobject thiz) {
-    // TODO: implement afterSeekCurrent()
+    if(NULL != videoPlayerController) {
+//		videoPlayerController->afterSeekCurrent();
+    }
 }
 
 extern "C"
@@ -165,5 +191,7 @@ JNIEXPORT void JNICALL
 Java_com_ryan_videoplayer_player_PlayerController_resetRenderSize(JNIEnv *env, jobject thiz,
                                                                   jint left, jint top, jint width,
                                                                   jint height) {
-    // TODO: implement resetRenderSize()
+    if(NULL != videoPlayerController) {
+        videoPlayerController->resetRenderSize(left, top, width, height);
+    }
 }

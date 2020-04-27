@@ -231,7 +231,7 @@ public class MainActivity extends BaseActivity implements SeekBar.OnSeekBarChang
                 };
                 //playerController.setUseMediaCodec(false);
                 int width = getWindowManager().getDefaultDisplay().getWidth();
-                String path = "/sdcard/DCIM/Camera/VID_20191122_202816.mp4";
+                String path = "/sdcard/DCIM/Camera/VID_20200427_151230.mp4";
                 playerController.init(path, holder.getSurface(), width, width, new OnInitializedCallback() {
                     public void onInitialized(OnInitialStatus onInitialStatus) {
                         // TODO: do your work here

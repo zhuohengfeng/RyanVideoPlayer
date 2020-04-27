@@ -1,9 +1,5 @@
-//
-// Created by hengfeng zhuo on 2020/4/26.
-//
-
-#ifndef RYANVIDEOPLAYER_VIDEO_PLAYER_CONTROLLER_H
-#define RYANVIDEOPLAYER_VIDEO_PLAYER_CONTROLLER_H
+#ifndef VIDEO_PLAYER_CONTROLLER_H
+#define VIDEO_PLAYER_CONTROLLER_H
 
 #include "CommonTools.h"
 #include <queue>
@@ -16,12 +12,10 @@
 #include "./video_output.h"
 #include "egl_core/egl_share_context.h"
 
-
 /**
  * Video Player Controller
  */
 class VideoPlayerController {
-
 public:
     VideoPlayerController();
     virtual ~VideoPlayerController();
@@ -32,11 +26,11 @@ public:
     /** 继续播放 **/
     void play();
 
-    /** 暂停播放 **/
-    void pause();
-
     /** seek到某个位置 **/
     void seekToPosition(float position);
+
+    /** 暂停播放 **/
+    void pause();
 
     /** 销毁播放器 **/
     virtual void destroy();
@@ -46,6 +40,7 @@ public:
     float getDuration();
     int getVideoFrameWidth();
     int getVideoFrameHeight();
+
     //获得缓冲进度
     float getBufferedProgress();
     //获得播放进度
@@ -55,20 +50,17 @@ public:
     void resetRenderSize(int left, int top, int width, int height);
 
     int getScreenWidth(){
-        if(nullptr != videoOutput){
+        if(NULL != videoOutput){
             return videoOutput->getScreenWidth();
         }
         return 0;
     };
     int getScreenHeight(){
-        if(nullptr != videoOutput){
+        if(NULL != videoOutput){
             return videoOutput->getScreenHeight();
         }
         return 0;
     };
-
-    void onSurfaceCreated(ANativeWindow* window, int widht, int height);
-    void onSurfaceDestroyed();
 
     /** 关键的回调方法 **/
     //当音频播放器播放完毕一段buffer之后，会回调这个方法，这个方法要做的就是用数据将这个buffer再填充起来
@@ -80,6 +72,9 @@ public:
     /** 当output初始化结束之后调用 **/
     static void outputOnInitialized(EGLContext eglContext, void* ctx);
     virtual bool startAVSynchronizer();
+
+    void onSurfaceCreated(ANativeWindow* window, int widht, int height);
+    void onSurfaceDestroyed();
 
     void signalOutputFrameAvailable();
 
@@ -130,6 +125,4 @@ protected:
     static void* initVideoOutputThreadCallback(void *myself);
     void initVideoOutput(ANativeWindow* window);
 };
-
-
-#endif //RYANVIDEOPLAYER_VIDEO_PLAYER_CONTROLLER_H
+#endif //VIDEO_PLAYER_CONTROLLER_H
