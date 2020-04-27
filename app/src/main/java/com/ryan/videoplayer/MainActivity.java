@@ -85,12 +85,12 @@ public class MainActivity extends BaseActivity implements SeekBar.OnSeekBarChang
                 timerStart();
             }
         });
-        timerStart();
     }
 
     @Override
     protected void initData() {
-        // 请求权限
+        // 启动定时器
+        timerStart();
     }
 
     @Override
@@ -99,14 +99,7 @@ public class MainActivity extends BaseActivity implements SeekBar.OnSeekBarChang
         // Free the native renderer
         Log.i("problem", "playerController.stop()...");
         playerController.stopPlay();
-        if (null != timerTask) {
-            timerTask.cancel();
-            timerTask = null;
-        }
-        if (null != timer) {
-            timer.cancel();
-            timer = null;
-        }
+        timerStop();
     }
 
     @Override
@@ -119,10 +112,15 @@ public class MainActivity extends BaseActivity implements SeekBar.OnSeekBarChang
         return super.onKeyDown(keyCode, event);
     }
 
-
     protected void timerStop() {
-        timerTask.cancel();
-        timer.cancel();
+        if (null != timerTask) {
+            timerTask.cancel();
+            timerTask = null;
+        }
+        if (null != timer) {
+            timer.cancel();
+            timer = null;
+        }
     }
 
     protected void timerStart() {
@@ -243,7 +241,6 @@ public class MainActivity extends BaseActivity implements SeekBar.OnSeekBarChang
 
                 isFirst = false;
             }
-
             else {
                 playerController.onSurfaceCreated(holder.getSurface());
             }

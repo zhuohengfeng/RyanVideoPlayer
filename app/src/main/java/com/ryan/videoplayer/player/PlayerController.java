@@ -12,7 +12,10 @@ public class PlayerController {
 
     public void init(final String srcFilenameParam, final Surface surface, final int width, final int height,
                      final OnInitializedCallback onInitializedCallback) {
-        this.init(srcFilenameParam, new int[] { -1, -1, -1 }, -1, 0.5f, 1.0f, surface, width, height,
+        this.init(srcFilenameParam,
+                new int[] { -1, -1, -1 },
+                -1, 0.5f, 1.0f,
+                surface, width, height,
                 onInitializedCallback);
     }
 
@@ -20,8 +23,8 @@ public class PlayerController {
                      final float minBufferedDuration, final float maxBufferedDuration, final Surface surface, final int width,
                      final int height, final OnInitializedCallback onInitializedCallback) {
         initializedCallback = onInitializedCallback;
-
-        prepare(srcFilenameParam, max_analyze_duration, max_analyze_duration.length, probesize, true, minBufferedDuration,
+        prepare(srcFilenameParam, max_analyze_duration, max_analyze_duration.length,
+                probesize, true, minBufferedDuration,
                 maxBufferedDuration, width, height, surface);
     }
 
