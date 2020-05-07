@@ -3,7 +3,10 @@ package com.ryan.videoplayer.player;
 import android.util.Log;
 import android.view.Surface;
 
-public class PlayerController {
+import com.ryan.videoplayer.decoder.MediaCodecDecoder;
+import com.ryan.videoplayer.decoder.MediaCodecDecoderLifeCycle;
+
+public class PlayerController extends MediaCodecDecoderLifeCycle {
 
     // Used to load the 'native-lib' library on application startup.
     static {
@@ -60,7 +63,6 @@ public class PlayerController {
             initializedCallback.onInitialized(onInitialStatus);
         }
     }
-
 
     public native void onSurfaceCreated(final Surface surface);
 

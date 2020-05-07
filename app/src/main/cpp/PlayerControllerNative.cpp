@@ -28,7 +28,7 @@ Java_com_ryan_videoplayer_player_PlayerController_prepare(JNIEnv *env, jobject o
                                                           jfloat min_buffered_duration,
                                                           jfloat max_buffered_duration, jint width,
                                                           jint height, jobject surface) {
-    LOGI("Enter Java_com_changba_songstudio_video_player_ChangbaPlayer_prepare...\n");
+    LOGI("Enter Java_com_ryan_videoplayer_player_PlayerController_prepare...\n");
 
     // 得到虚拟机实例g_jvm
     JavaVM *g_jvm = NULL;
@@ -60,7 +60,6 @@ Java_com_ryan_videoplayer_player_PlayerController_prepare(JNIEnv *env, jobject o
 
     return initCode;
 }
-
 
 
 extern "C"
